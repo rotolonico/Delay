@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5739772480692679743
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2184732050286087371, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_Name
+      value: SwordmanRed
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5081995784468867223, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: pawnType
+      value: Swordman
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087373, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087373, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8285fb0426cf0680e9a62a4a6b85a5a1,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fdf609a6ace88511c8c3673c68a52d61, type: 3}
