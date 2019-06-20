@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5014581984516974943}
   m_Layer: 0
   m_Name: Hexagon
-  m_TagString: Untagged
+  m_TagString: Hexagon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 3135503089661056000}
-  sprites:
-  - {fileID: 21300000, guid: 8f3dd0001df6512698cf22615ed4d368, type: 3}
-  - {fileID: 21300000, guid: 35bcd3f69c6ab580c86baeec529bce2e, type: 3}
-  - {fileID: 21300000, guid: 8719a036e3e12b6b2b4837d282531daa, type: 3}
+  hexagonColor: 0

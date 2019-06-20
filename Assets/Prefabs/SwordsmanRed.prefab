@@ -10,7 +10,12 @@ PrefabInstance:
     - target: {fileID: 2184732050286087371, guid: fdf609a6ace88511c8c3673c68a52d61,
         type: 3}
       propertyPath: m_Name
-      value: SwordmanRed
+      value: SwordsmanRed
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184732050286087371, guid: fdf609a6ace88511c8c3673c68a52d61,
+        type: 3}
+      propertyPath: m_TagString
+      value: Swordsman
       objectReference: {fileID: 0}
     - target: {fileID: 2184732050286087372, guid: fdf609a6ace88511c8c3673c68a52d61,
         type: 3}

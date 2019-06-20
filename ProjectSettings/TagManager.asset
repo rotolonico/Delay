@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Selector
+  - Bomb
+  - Swordsman
+  - Hexagon
+  - Generator
+  - King
+  - Protector
   layers:
   - Default
   - TransparentFX
