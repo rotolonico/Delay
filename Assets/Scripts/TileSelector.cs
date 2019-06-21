@@ -22,7 +22,7 @@ public class TileSelector : MonoBehaviour
     {
         if (!isActivated || !Input.GetMouseButtonDown(0)) return;
         var hitCollider = MainHandler.RaycastMouse().collider;
-        if (hitCollider.CompareTag("Selector")) hitCollider.GetComponent<PossibleTile>().OnClick();
+        if (hitCollider != null && hitCollider.CompareTag("Selector")) hitCollider.GetComponent<PossibleTile>().OnClick();
     }
 
     public void ActivateSelector(Transform newSelectedPawn)
@@ -54,5 +54,43 @@ public class TileSelector : MonoBehaviour
         selectedPawn = null;
         
         isActivated = false;
+    }
+
+    public void DoubleClick(Transform newSelectedPawn)
+    {
+        isActivated = true;
+        
+        selectedPawn = newSelectedPawn;
+
+        var thisTransformPosition = selectedPawn.position;
+        thisTransformPosition.z = -2;
+        thisTransform.position = thisTransformPosition;
+        
+        thisTransform.eulerAngles = Vector3.zero;
+        
+        foreach (var possibleTile in possibleTiles)
+        {
+            possibleTile.Activate();
+        }
+        
+        foreach (var possibleTile in possibleTiles)
+        {
+            possibleTile.DoubleClick();
+        }
+
+        switch (selectedPawn.GetComponent<PawnHandler>().pawnType)
+        {
+            case "Bomb":
+                Destroy(selectedPawn.gameObject);
+                break;
+            case "Swordsman":
+                Destroy(selectedPawn.gameObject);
+                Destroy(Physics2D.OverlapCircle(transform.position, 0.1f).gameObject);
+                break;
+        }
+        
+        DeactivateSelector();
+        
+        MainHandler.TurnHandler.ChangeTurn();
     }
 }

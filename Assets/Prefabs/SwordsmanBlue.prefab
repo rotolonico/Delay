@@ -96,7 +96,7 @@ PrefabInstance:
     - target: {fileID: -4110444390860786320, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
         type: 3}
       propertyPath: pawnType
-      value: Swordman
+      value: Swordsman
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93e7f8e6bd10be363bfc4d0cc093757c, type: 3}

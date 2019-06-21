@@ -25,7 +25,7 @@ PrefabInstance:
     - target: {fileID: 2171753847641657643, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2171753847641657643, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
         type: 3}
@@ -72,16 +72,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2171753847641657643, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2171753847641657643, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 2171753847641657642, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
         type: 3}
       propertyPath: m_Sprite
@@ -90,12 +80,22 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 2171753847641657642, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
         type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
+      propertyPath: m_Color.r
+      value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2305845469199851138, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
+    - target: {fileID: 2171753847641657642, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
         type: 3}
-      propertyPath: m_IsTrigger
+      propertyPath: m_Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171753847641657642, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4110444390860786320, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
+        type: 3}
+      propertyPath: deactivated
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4110444390860786320, guid: 93e7f8e6bd10be363bfc4d0cc093757c,
@@ -108,6 +108,5 @@ PrefabInstance:
       propertyPath: pawnType
       value: King
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8086013379045682293, guid: 93e7f8e6bd10be363bfc4d0cc093757c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93e7f8e6bd10be363bfc4d0cc093757c, type: 3}
