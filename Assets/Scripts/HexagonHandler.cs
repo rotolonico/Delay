@@ -38,13 +38,13 @@ public class HexagonHandler : MonoBehaviour
         switch (newTeam)
         {
             case 0:
-                sr.sprite = isGenerator ? MainHandler.Resources.generatorHexagonSprite : MainHandler.Resources.hexagonSprite;
+                sr.sprite = isGenerator ? MainHandler.GameResources.generatorHexagonSprite : MainHandler.GameResources.hexagonSprite;
                 break;
             case 1:
-                sr.sprite = isGenerator ? MainHandler.Resources.blueGeneratorHexagonSprite : MainHandler.Resources.blueHexagonSprite;
+                sr.sprite = isGenerator ? MainHandler.GameResources.blueGeneratorHexagonSprite : MainHandler.GameResources.blueHexagonSprite;
                 break;
             case 2:
-                sr.sprite = isGenerator ? MainHandler.Resources.redGeneratorHexagonSprite : MainHandler.Resources.redHexagonSprite;
+                sr.sprite = isGenerator ? MainHandler.GameResources.redGeneratorHexagonSprite : MainHandler.GameResources.redHexagonSprite;
                 break;
         }
         
@@ -66,7 +66,7 @@ public class HexagonHandler : MonoBehaviour
 
         var spawnPosition = transform.position;
         spawnPosition.z = -1;
-        Instantiate(team == 1 ? MainHandler.Resources.BlueSwordsMan : MainHandler.Resources.RedSwordsMan, spawnPosition, Quaternion.identity).transform.SetParent(MainHandler.Resources.Grid, true);
+        Instantiate(team == 1 ? MainHandler.GameResources.BlueSwordsMan : MainHandler.GameResources.RedSwordsMan, spawnPosition, Quaternion.identity).transform.SetParent(MainHandler.GameResources.Grid, true);
     }
     
 }

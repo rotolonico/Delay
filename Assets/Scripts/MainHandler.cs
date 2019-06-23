@@ -2,14 +2,14 @@
 
 public class MainHandler : MonoBehaviour
 {
-    public static Resources Resources;
+    public static GameResources GameResources;
     public static TileSelector TileSelector;
     public static TurnHandler TurnHandler;
     public static Camera Camera;
 
     private void Start()
     {
-        Resources = GetComponent<Resources>();
+        GameResources = GetComponent<GameResources>();
         TileSelector = GameObject.Find("TileSelector").GetComponent<TileSelector>();
         TurnHandler = GetComponent<TurnHandler>();
         Camera = Camera.main;

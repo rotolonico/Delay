@@ -11,6 +11,7 @@ TagManager:
   - Generator
   - King
   - Protector
+  - EditorTile
   layers:
   - Default
   - TransparentFX

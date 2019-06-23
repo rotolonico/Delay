@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Resources : MonoBehaviour
+public class GameResources : MonoBehaviour
 {
     public Sprite hexagonSprite;
     public Sprite blueHexagonSprite;
