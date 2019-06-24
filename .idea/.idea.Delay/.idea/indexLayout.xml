@@ -16,6 +16,7 @@
     <explicitExcludes>
       <Path>.git</Path>
       <Path>.idea</Path>
+      <Path>Delay_Data</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
       <Path>Temp</Path>

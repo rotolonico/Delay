@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "673831117140",
+    "firebase_url": "https://nico-the-weather.firebaseio.com",
+    "project_id": "nico-the-weather",
+    "storage_bucket": "nico-the-weather.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673831117140:android:c394d6ac23bbb626",
+        "android_client_info": {
+          "package_name": "com.rotolonico.delay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673831117140-f66vetq11n2664s4h60nk63tlv2jsenq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT4VasK_vHM8Kyu8Ebgl1zfSFumnT83Ow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673831117140-f66vetq11n2664s4h60nk63tlv2jsenq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -53,15 +53,19 @@ public class EditorHandler : MonoBehaviour
             .SetParent(grid.transform, true);
     }
 
-    public void SaveMap(string mapName)
+    public string ConvertMapToJson(string mapName)
     {
         var tilesGameObjects = GameObject.FindGameObjectsWithTag("EditorTile");
         var tiles = tilesGameObjects.Select(tilesGameObject => tilesGameObject.GetComponent<TileSettings>()).Select(tileSettings => new Tile(tileSettings.team, tileSettings.type, tileSettings.id, tileSettings.position.x, tileSettings.position.y)).ToList();
         var map = new Map {TileSet = tiles, name = mapName};
         fsData data;
         serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
-        
-        File.WriteAllText(Application.persistentDataPath + "/" + mapName + ".dmap", fsJsonPrinter.CompressedJson(data));
+        return fsJsonPrinter.CompressedJson(data);
+    }
+
+    public void SaveMap(string mapName)
+    {
+        File.WriteAllText(Application.persistentDataPath + "/" + mapName + ".dmap", ConvertMapToJson(mapName));
     }
     
     public void LoadMap(string mapName)
@@ -83,6 +87,11 @@ public class EditorHandler : MonoBehaviour
             Instantiate(spawnables[tile.id], spawnPosition, Quaternion.identity).transform.SetParent(grid.transform, true);
 
         }
+    }
+
+    public void UploadMap(string mapName)
+    {
+        DatabaseHandler.UploadMap(ConvertMapToJson(mapName));
     }
 
     public void ClearMap()
