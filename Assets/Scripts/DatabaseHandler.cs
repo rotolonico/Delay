@@ -1,24 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using Firebase;
-using Firebase.Database;
-using Firebase.Unity.Editor;
+using Proyecto26;
 using UnityEngine;
 
 public class DatabaseHandler : MonoBehaviour
 {
-    private static DatabaseReference reference;
-    
-    public string databaseURL;
-    
+    public static string projectId;
+    private static string databaseURL;
+
     private void Start()
     {
-        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl(databaseURL);
-        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        databaseURL = $"https://{projectId}.firebaseio.com/";
     }
 
-    public static void UploadMap(string map)
+    public static void UploadMap(string mapName, string map)
     {
-        reference.Child("maps").SetRawJsonValueAsync(map);
+        RestClient.Put($"{databaseURL}maps/{mapName}.json", map);
     }
 }

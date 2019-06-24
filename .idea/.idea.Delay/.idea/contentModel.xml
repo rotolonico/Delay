@@ -7,38 +7,6 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Firebase" t="Include">
-          <e p="Editor" t="Include">
-            <e p="AppDependencies.xml" t="Include" />
-            <e p="AuthDependencies.xml" t="Include" />
-            <e p="DatabaseDependencies.xml" t="Include" />
-            <e p="FirebaseAuth_v1.1.2_manifest.txt" t="Include" />
-            <e p="FirebaseDatabase_version-6.1.1_manifest.txt" t="Include" />
-          </e>
-          <e p="Plugins" t="Include">
-            <e p="Http" t="Include">
-              <e p="link.xml" t="Include" />
-            </e>
-            <e p="link.xml" t="Include" />
-          </e>
-          <e p="m2repository" t="Include">
-            <e p="com" t="Include">
-              <e p="google" t="Include">
-                <e p="firebase" t="Include">
-                  <e p="firebase-app-unity" t="Include">
-                    <e p="maven-metadata.xml" t="Include" />
-                  </e>
-                  <e p="firebase-auth-unity" t="Include">
-                    <e p="maven-metadata.xml" t="Include" />
-                  </e>
-                  <e p="firebase-database-unity" t="Include">
-                    <e p="maven-metadata.xml" t="Include" />
-                  </e>
-                </e>
-              </e>
-            </e>
-          </e>
-        </e>
         <e p="FullSerializer" t="Include">
           <e p="Source" t="Include">
             <e p="Aot" t="Include">
@@ -114,6 +82,35 @@
         <e p="PlayServicesResolver" t="Include">
           <e p="Editor" t="Include">
             <e p="play-services-resolver_v1.2.116.0.txt" t="Include" />
+          </e>
+        </e>
+        <e p="RestClient" t="Include">
+          <e p="Packages" t="Include">
+            <e p="Proyecto26.RestClient" t="Include">
+              <e p="RestClient.cs" t="Include" />
+              <e p="RestClientPromise.cs" t="Include" />
+              <e p="Utils" t="Include">
+                <e p="Extensions.cs" t="Include" />
+                <e p="HttpBase.cs" t="Include" />
+                <e p="JsonHelper.cs" t="Include" />
+                <e p="RequestException.cs" t="Include" />
+                <e p="RequestHelper.cs" t="Include" />
+                <e p="ResponseHelper.cs" t="Include" />
+                <e p="StaticCoroutine.cs" t="Include" />
+              </e>
+            </e>
+            <e p="RSG.Promise" t="Include">
+              <e p="EnumerableExt.cs" t="Include" />
+              <e p="Exceptions" t="Include">
+                <e p="PromiseException.cs" t="Include" />
+                <e p="PromiseStateException.cs" t="Include" />
+              </e>
+              <e p="Promise.cs" t="Include" />
+              <e p="PromiseHelpers.cs" t="Include" />
+              <e p="PromiseTimer.cs" t="Include" />
+              <e p="Promise_NonGeneric.cs" t="Include" />
+              <e p="Tuple.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="Scripts" t="Include">

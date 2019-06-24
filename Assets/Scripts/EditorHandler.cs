@@ -91,7 +91,7 @@ public class EditorHandler : MonoBehaviour
 
     public void UploadMap(string mapName)
     {
-        DatabaseHandler.UploadMap(ConvertMapToJson(mapName));
+        DatabaseHandler.UploadMap(mapName, ConvertMapToJson(mapName));
     }
 
     public void ClearMap()
