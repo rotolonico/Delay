@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3135503089661056006, guid: a73625d2997d009da85f47767934f631,
         type: 3}
       propertyPath: m_Name
-      value: GeneratorHexagon 2
+      value: GeneratorHexagonBlue
       objectReference: {fileID: 0}
     - target: {fileID: 3135503089661056001, guid: a73625d2997d009da85f47767934f631,
         type: 3}
@@ -71,11 +71,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5050027becd0bf13fb08769d4d21dd0d,
+      objectReference: {fileID: 21300000, guid: 8f07222300cee77ec94bd722efe09806,
         type: 3}
     - target: {fileID: 5014581984516974943, guid: a73625d2997d009da85f47767934f631,
         type: 3}
       propertyPath: isGenerator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014581984516974943, guid: a73625d2997d009da85f47767934f631,
+        type: 3}
+      propertyPath: team
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
