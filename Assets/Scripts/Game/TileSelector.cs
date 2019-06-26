@@ -23,7 +23,7 @@ namespace Game
         private void Update()
         {
             if (!isActivated || !Input.GetMouseButtonDown(0)) return;
-            var hitCollider = MainHandler.RaycastMouse().collider;
+            var hitCollider = GameHandler.RaycastMouse().collider;
             if (hitCollider != null && hitCollider.CompareTag("Selector")) hitCollider.GetComponent<PossibleTile>().OnClick();
         }
 
@@ -93,7 +93,7 @@ namespace Game
         
             DeactivateSelector();
         
-            MainHandler.TurnHandler.ChangeTurn();
+            GameHandler.TurnHandler.ChangeTurn();
         }
     }
 }

@@ -76,7 +76,7 @@ namespace Game
             selectedPawnHandler.UpdatePosition(transform.position);
             TileSelector.reference.DeactivateSelector();
 
-            MainHandler.TurnHandler.ChangeTurn();
+            GameHandler.TurnHandler.ChangeTurn();
         }
 
         public void DoubleClick()

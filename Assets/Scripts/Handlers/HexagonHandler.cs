@@ -16,8 +16,8 @@ namespace Handlers
 
         private void Update()
         {
-            if (!deactivated && team != 0 && MainHandler.TurnHandler.turn != team) Deactivate();
-            else if (deactivated && MainHandler.TurnHandler.turn == team) Activate();
+            if (!deactivated && team != 0 && GameHandler.TurnHandler.turn != team) Deactivate();
+            else if (deactivated && GameHandler.TurnHandler.turn == team) Activate();
         }
     
         private void Activate()
@@ -39,13 +39,13 @@ namespace Handlers
             switch (newTeam)
             {
                 case 0:
-                    sr.sprite = isGenerator ? MainHandler.GameResources.generatorHexagonSprite : MainHandler.GameResources.hexagonSprite;
+                    sr.sprite = isGenerator ? GameHandler.GameResources.generatorHexagonSprite : GameHandler.GameResources.hexagonSprite;
                     break;
                 case 1:
-                    sr.sprite = isGenerator ? MainHandler.GameResources.blueGeneratorHexagonSprite : MainHandler.GameResources.blueHexagonSprite;
+                    sr.sprite = isGenerator ? GameHandler.GameResources.blueGeneratorHexagonSprite : GameHandler.GameResources.blueHexagonSprite;
                     break;
                 case 2:
-                    sr.sprite = isGenerator ? MainHandler.GameResources.redGeneratorHexagonSprite : MainHandler.GameResources.redHexagonSprite;
+                    sr.sprite = isGenerator ? GameHandler.GameResources.redGeneratorHexagonSprite : GameHandler.GameResources.redHexagonSprite;
                     break;
             }
         
@@ -69,10 +69,10 @@ namespace Handlers
             spawnPosition.z = -1;
             var newPawn =
                 Instantiate(
-                    team == 1 ? MainHandler.GameResources.BlueSwordsMan : MainHandler.GameResources.RedSwordsMan,
+                    team == 1 ? GameHandler.GameResources.BlueSwordsMan : GameHandler.GameResources.RedSwordsMan,
                     spawnPosition, Quaternion.identity);
             newPawn.GetComponent<PawnHandler>().generated = true;
-            newPawn.transform.SetParent(MainHandler.GameResources.Grid, true);
+            newPawn.transform.SetParent(GameHandler.GameResources.Grid, true);
 
         }
     

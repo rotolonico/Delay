@@ -17,7 +17,7 @@ namespace Handlers
         
         public void Play()
         {
-            Global.selectedMapJson = battlefieldMap;
+            Global.SelectedMapJson = battlefieldMap;
             SceneManager.LoadScene(1);
         }
     

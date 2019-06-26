@@ -27,24 +27,32 @@ exports.onNewPlayer = functions.database
             var gameId = lastChild.key + secondLastChild.key;
             console.log("Gameid: " + gameId)
 
-            var map;
+            var mapName;
             if (Math.random() > 0.5){
-                map = secondLastChild.val().map;
+                mapName = secondLastChild.val().map;
             } else {
-                map = lastChild.val().map;
+                mapName = lastChild.val().map;
             }
-            
-            admin.database().ref("/games").child(gameId).update({
-                map: map,
-                turn: secondLastChild.key
-            })
-    
-            lastChild.ref.update({
-                gameid: gameId
-            });
-    
-            secondLastChild.ref.update({
-                gameid: gameId
+
+            admin.database().ref("/maps").child(mapName).once("value")
+            .then(function(mapSnapshot) {
+                admin.database().ref("/games").child(gameId).update({
+                    map: mapSnapshot.val(),
+                    turn: secondLastChild.key
+                })
+        
+                lastChild.ref.update({
+                    gameid: gameId
+                });
+        
+                secondLastChild.ref.update({
+                    gameid: gameId
+                });
+
+                return null;
+                
+            }).catch(function(error) {
+                console.log(error);
             });
         }
 

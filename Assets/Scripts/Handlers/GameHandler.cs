@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.IO;
+using System.Linq;
 using FullSerializer;
 using Game;
 using Globals;
@@ -7,8 +9,9 @@ using UnityEngine;
 
 namespace Handlers
 {
-    public class MainHandler : MonoBehaviour
+    public class GameHandler : MonoBehaviour
     {
+        public static GameHandler reference;
         public static GameResources GameResources;
         public static TileSelector TileSelector;
         public static TurnHandler TurnHandler;
@@ -19,15 +22,27 @@ namespace Handlers
 
         private void Start()
         {
+            reference = this;
             GameResources = GetComponent<GameResources>();
             TileSelector = GameObject.Find("TileSelector").GetComponent<TileSelector>();
             TurnHandler = GetComponent<TurnHandler>();
             Camera = Camera.main;
-            LoadMap(Global.selectedMapJson);
+            LoadMap(Global.SelectedMapJson);
+            if (Global.IsOnlineMatch) StartCoroutine(CheckTurn());
+        }
+
+        private void ClearMap()
+        {
+            for (var i = 1; i < grid.transform.childCount; i++)
+            {
+                Destroy(grid.transform.GetChild(i));
+            }
         }
 
         private void LoadMap(string mapJson)
         {
+            ClearMap();
+            
             var data = fsJsonParser.Parse(mapJson);
             
             object deserialized = null;
@@ -40,6 +55,27 @@ namespace Handlers
                 var spawnPosition = new Vector3(tile.x, tile.y, 0);
                 Instantiate(spawnables[tile.id], spawnPosition, Quaternion.identity).transform.SetParent(grid.transform, true);
             }
+        }
+
+        public IEnumerator CheckTurn()
+        {
+            if (Global.IsPlayerTurn) yield break;
+            yield return new WaitForSecondsRealtime(3);
+            DatabaseHandler.CheckTurn(Global.GameId, playerTurnId =>
+            {
+                if (playerTurnId == Global.PlayerId)
+                {
+                    //DatabaseHandler.DownloadMap(Global.GameId, map =>
+                    //{
+                        //LoadMap(map);
+                        TurnHandler.ChangeTurn();
+                    //});
+                }
+                else
+                {
+                    StartCoroutine(CheckTurn());
+                }
+            });
         }
 
         public static RaycastHit2D RaycastMouse()

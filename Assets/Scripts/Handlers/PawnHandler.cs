@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Globals;
 using UnityEngine;
 
 namespace Handlers
@@ -21,8 +22,8 @@ namespace Handlers
 
         private void Start()
         {
-            if (!generated) Instantiate(team == 1 ? MainHandler.GameResources.blueHexagon : MainHandler.GameResources.redHexagon,
-                transform.position, Quaternion.identity);
+            if (!generated) Instantiate(team == 1 ? GameHandler.GameResources.blueHexagon : GameHandler.GameResources.redHexagon,
+                transform.position, Quaternion.identity).transform.SetParent(GameHandler.reference.grid.transform, true);
             thisTransform = transform;
             var currentPosition = thisTransform.position;
             currentPosition.z = -1;
@@ -33,8 +34,8 @@ namespace Handlers
 
         private void Update()
         {
-            if (!deactivated && MainHandler.TurnHandler.turn != team) Deactivate();
-            else if (deactivated && MainHandler.TurnHandler.turn == team) Activate();
+            if (!deactivated && GameHandler.TurnHandler.turn != team) Deactivate();
+            else if (deactivated && GameHandler.TurnHandler.turn == team) Activate();
         }
     
         private void Activate()
@@ -64,12 +65,14 @@ namespace Handlers
 
         private void OnMouseDown()
         {
+            if (Global.IsOnlineMatch && !Global.IsPlayerTurn) return;
+            
             if (deactivated) return;
 
-            if (MainHandler.TileSelector.selectedPawn == thisTransform)
+            if (GameHandler.TileSelector.selectedPawn == thisTransform)
             {
                 deactivatedSelector = true;
-                MainHandler.TileSelector.DeactivateSelector();
+                GameHandler.TileSelector.DeactivateSelector();
             }
         
             if (possibleDoubleClick)
@@ -87,9 +90,9 @@ namespace Handlers
                 return;
             }
 
-            if (MainHandler.TileSelector.selectedPawn != thisTransform)
+            if (GameHandler.TileSelector.selectedPawn != thisTransform)
             {
-                MainHandler.TileSelector.ActivateSelector(thisTransform);
+                GameHandler.TileSelector.ActivateSelector(thisTransform);
             }
         }
 
@@ -102,7 +105,7 @@ namespace Handlers
 
         private void DoubleClick()
         {
-            MainHandler.TileSelector.DoubleClick(thisTransform);
+            GameHandler.TileSelector.DoubleClick(thisTransform);
         }
 
         public void UpdatePosition(Vector3 newPosition)

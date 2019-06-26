@@ -79,7 +79,6 @@
             <e p="fsSerializer.cs" t="Include" />
           </e>
         </e>
-        <e p="OnlineHandler.cs" t="Include" />
         <e p="RestClient" t="Include">
           <e p="Packages" t="Include">
             <e p="Proyecto26.RestClient" t="Include">
@@ -124,9 +123,10 @@
           <e p="Handlers" t="Include">
             <e p="DatabaseHandler.cs" t="Include" />
             <e p="EditorHandler.cs" t="Include" />
+            <e p="GameHandler.cs" t="Include" />
             <e p="HexagonHandler.cs" t="Include" />
-            <e p="MainHandler.cs" t="Include" />
             <e p="MenuButtons.cs" t="Include" />
+            <e p="OnlineHandler.cs" t="Include" />
             <e p="PawnHandler.cs" t="Include" />
             <e p="TileSpawner.cs" t="Include" />
             <e p="TurnHandler.cs" t="Include" />
