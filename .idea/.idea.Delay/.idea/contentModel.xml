@@ -133,6 +133,7 @@
           </e>
           <e p="Serializables" t="Include">
             <e p="Map.cs" t="Include" />
+            <e p="Move.cs" t="Include" />
             <e p="Tile.cs" t="Include" />
           </e>
         </e>

@@ -10,5 +10,6 @@ namespace Globals
         public static bool IsPlayerTurn;
         public static string GameId;
         public static string PlayerId;
+        public static int maxId;
     }
 }

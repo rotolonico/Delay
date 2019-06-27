@@ -1,5 +1,6 @@
 ﻿using System;
 using Proyecto26;
+using Serializables;
 using UnityEngine;
 
 namespace Handlers
@@ -10,7 +11,9 @@ namespace Handlers
         public delegate void IsGameReadyCallback(string gameId, bool ready);
         public delegate void DownloadMapCallback(string map);
         public delegate void CheckTurnCallback(string playerId);
+        public delegate void UploadTurnCallback();
         public delegate void ChangeTurnCallback();
+        public delegate void DownloadTurnCallback(Move move);
     
         public static string projectId;
         private static string databaseURL;
@@ -51,11 +54,13 @@ namespace Handlers
         {
             RestClient.Get($"{databaseURL}games/{gameId}/turn.json").Then(response =>
             {
-                Debug.Log(gameId);
-                Debug.Log(response.Text);
-                Debug.Log(response.Text.Trim('"'));
                 callback(response.Text.Trim('"'));
             });
+        }
+
+        public static void UploadMove(string gameId, Move move, UploadTurnCallback callback)
+        {
+            RestClient.Put<Move>($"{databaseURL}games/{gameId}/move.json", move).Then(response => { callback(); });
         }
 
         public static void ChangeTurn(string gameId, string playerId, ChangeTurnCallback callback)
@@ -63,6 +68,14 @@ namespace Handlers
             var opponentPlayerId = gameId.Remove(gameId.IndexOf(playerId, StringComparison.Ordinal), playerId.Length);
             var payLoad = "\"" + opponentPlayerId + "\"";
             RestClient.Put($"{databaseURL}games/{gameId}/turn.json", payLoad).Then(response => { callback(); });
+        }
+        
+        public static void DownloadMove(string gameId, DownloadTurnCallback callback)
+        {
+            RestClient.Get<Move>($"{databaseURL}games/{gameId}/move.json").Then(response =>
+            { 
+                callback(response);
+            });
         }
     }
 }

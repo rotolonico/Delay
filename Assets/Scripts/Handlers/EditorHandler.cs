@@ -58,7 +58,7 @@ namespace Handlers
         public string ConvertMapToJson(string mapName)
         {
             var tilesGameObjects = GameObject.FindGameObjectsWithTag("EditorTile");
-            var tiles = tilesGameObjects.Select(tilesGameObject => tilesGameObject.GetComponent<TileSettings>()).Select(tileSettings => new Tile(tileSettings.team, tileSettings.type, tileSettings.id, tileSettings.position.x, tileSettings.position.y)).ToList();
+            var tiles = tilesGameObjects.Select(tilesGameObject => tilesGameObject.GetComponent<TileSettings>()).Select(tileSettings => new Tile(tileSettings.team, tileSettings.type, tileSettings.id, tileSettings.position.x, tileSettings.position.y, tileSettings.tileId)).ToList();
             var map = new Map {TileSet = tiles, name = mapName};
             fsData data;
             serializer.TrySerialize(typeof(Map), map, out data).AssertSuccessWithoutWarnings();
@@ -86,7 +86,11 @@ namespace Handlers
             foreach (var tile in map.TileSet)
             {
                 var spawnPosition = new Vector3(tile.x, tile.y, -1);
-                Instantiate(spawnables[tile.id], spawnPosition, Quaternion.identity).transform.SetParent(grid.transform, true);
+                var newTile = Instantiate(spawnables[tile.id], spawnPosition, Quaternion.identity);
+                newTile.transform.SetParent(grid.transform, true);
+                var newTileSettings = newTile.GetComponent<TileSettings>();
+                newTileSettings.loadedTile = true;
+                newTileSettings.tileId = tile.tileId;
 
             }
         }

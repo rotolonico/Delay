@@ -103,7 +103,7 @@ namespace Handlers
             possibleDoubleClick = false;
         }
 
-        private void DoubleClick()
+        public void DoubleClick()
         {
             GameHandler.TileSelector.DoubleClick(thisTransform);
         }

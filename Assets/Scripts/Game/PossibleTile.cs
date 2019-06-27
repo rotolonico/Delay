@@ -1,5 +1,6 @@
 ﻿using Handlers;
 using JetBrains.Annotations;
+using Serializables;
 using UnityEngine;
 
 namespace Game
@@ -72,11 +73,12 @@ namespace Game
             if (possibleCapture != null) Destroy(possibleCapture.gameObject);
         
             Deactivate();
-        
-            selectedPawnHandler.UpdatePosition(transform.position);
-            TileSelector.reference.DeactivateSelector();
 
-            GameHandler.TurnHandler.ChangeTurn();
+            var newPosition = transform.position;
+            selectedPawnHandler.UpdatePosition(newPosition);
+            TileSelector.reference.DeactivateSelector();
+            
+            GameHandler.TurnHandler.ChangeTurn(true, new Move(selectedPawnHandler.name, false, newPosition));
         }
 
         public void DoubleClick()

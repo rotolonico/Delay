@@ -27,6 +27,8 @@ namespace Handlers
             TileSelector = GameObject.Find("TileSelector").GetComponent<TileSelector>();
             TurnHandler = GetComponent<TurnHandler>();
             Camera = Camera.main;
+
+            Global.maxId = 0;
             LoadMap(Global.SelectedMapJson);
             if (Global.IsOnlineMatch) StartCoroutine(CheckTurn());
         }
@@ -53,7 +55,10 @@ namespace Handlers
             foreach (var tile in map.TileSet)
             {
                 var spawnPosition = new Vector3(tile.x, tile.y, 0);
-                Instantiate(spawnables[tile.id], spawnPosition, Quaternion.identity).transform.SetParent(grid.transform, true);
+                var newTile = Instantiate(spawnables[tile.id], spawnPosition, Quaternion.identity);
+                newTile.transform.SetParent(grid.transform, true);
+                newTile.name = tile.tileId;
+
             }
         }
 
@@ -65,11 +70,19 @@ namespace Handlers
             {
                 if (playerTurnId == Global.PlayerId)
                 {
-                    //DatabaseHandler.DownloadMap(Global.GameId, map =>
-                    //{
-                        //LoadMap(map);
+                    DatabaseHandler.DownloadMove(Global.GameId, move =>
+                    {
+                        if (move.doubleClick)
+                        {
+                            GameObject.Find(move.pawn).GetComponent<PawnHandler>().DoubleClick();
+                        }
+                        else
+                        {
+                            GameObject.Find(move.pawn).GetComponent<PawnHandler>().UpdatePosition(move.newPosition);
+                        }
+                        
                         TurnHandler.ChangeTurn();
-                    //});
+                    });
                 }
                 else
                 {

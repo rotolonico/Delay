@@ -1,4 +1,5 @@
 ﻿using Handlers;
+using Serializables;
 using UnityEngine;
 
 namespace Game
@@ -93,7 +94,7 @@ namespace Game
         
             DeactivateSelector();
         
-            GameHandler.TurnHandler.ChangeTurn();
+            GameHandler.TurnHandler.ChangeTurn(true, new Move(name, true, Vector2.zero));
         }
     }
 }

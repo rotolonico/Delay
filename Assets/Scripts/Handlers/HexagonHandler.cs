@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Globals;
 using UnityEngine;
 
 namespace Handlers
@@ -31,7 +32,6 @@ namespace Handlers
         {
             sr.color = new Color(0.5f,0.5f,0.5f);
             deactivated = true;
-            //if (isGenerator) StartCoroutine(SpawnPawn());
         }
 
         public void ChangeTeam(int newTeam)
@@ -54,7 +54,7 @@ namespace Handlers
 
         private IEnumerator SpawnPawn()
         {
-            yield return new WaitForSecondsRealtime(0.01f);
+            yield return new WaitForSecondsRealtime(0.03f);
         
             if (Physics2D.OverlapCircleNonAlloc(transform.position, 0.1f, colliders) > 1) yield break;
             var collidersAround = Physics2D.OverlapCircleAll(transform.position, 1.5f);
@@ -71,6 +71,8 @@ namespace Handlers
                 Instantiate(
                     team == 1 ? GameHandler.GameResources.BlueSwordsMan : GameHandler.GameResources.RedSwordsMan,
                     spawnPosition, Quaternion.identity);
+            newPawn.name = Global.maxId.ToString();
+            Global.maxId++;
             newPawn.GetComponent<PawnHandler>().generated = true;
             newPawn.transform.SetParent(GameHandler.GameResources.Grid, true);
 

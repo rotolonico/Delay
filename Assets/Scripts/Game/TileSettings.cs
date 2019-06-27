@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Globals;
+using UnityEngine;
 
 namespace Game
 {
@@ -10,9 +11,14 @@ namespace Game
 
         public Vector2 position;
 
+        public string tileId;
+
+        public bool loadedTile;
+
         private void Start()
         {
             position = transform.position;
+            if (!loadedTile) tileId = BasicFunctions.GetCurrentTimestamp().ToString();
         }
     }
 }

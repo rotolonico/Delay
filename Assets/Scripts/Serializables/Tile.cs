@@ -12,11 +12,14 @@ namespace Serializables
         public float x;
         public float y;
 
-        public Tile(int newTeam, string newType, int newId, float newX, float newY)
+        public string tileId; 
+
+        public Tile(int newTeam, string newType, int newId, float newX, float newY, string newTileId)
         {
             team = newTeam;
             type = newType;
             id = newId;
+            tileId = newTileId;
         
             x = newX;
             y = newY;
