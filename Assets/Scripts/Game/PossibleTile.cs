@@ -75,10 +75,10 @@ namespace Game
             Deactivate();
 
             var newPosition = transform.position;
-            selectedPawnHandler.UpdatePosition(newPosition);
+            selectedPawnHandler.UpdatePosition(newPosition, false);
             TileSelector.reference.DeactivateSelector();
             
-            GameHandler.TurnHandler.ChangeTurn(true, new Move(selectedPawnHandler.name, false, newPosition));
+            GameHandler.TurnHandler.ChangeTurn(true, new Move(selectedPawnHandler.name, false, newPosition, false));
         }
 
         public void DoubleClick()

@@ -9,14 +9,14 @@ namespace Handlers
     {
         private void Start()
         {
-            GeneratePlayerId();
             DatabaseHandler.EnterWaitingRoom(Global.PlayerId, "battlefield",
                 response => { StartCoroutine(IsGameReady()); });
         }
 
-        private void GeneratePlayerId()
+        public void Back()
         {
-            Global.PlayerId = BasicFunctions.GetCurrentTimestamp().ToString();
+            DatabaseHandler.ExitWaitingRoom(Global.PlayerId);
+            SceneManager.LoadScene(0);
         }
 
         private IEnumerator IsGameReady()
@@ -27,6 +27,8 @@ namespace Handlers
             {
                 if (ready)
                 {
+                    DatabaseHandler.ExitWaitingRoom(Global.PlayerId);
+                    
                     Global.GameId = gameId;
 
                     DatabaseHandler.DownloadMap(gameId, map =>

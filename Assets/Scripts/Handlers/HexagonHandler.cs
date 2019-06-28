@@ -71,8 +71,8 @@ namespace Handlers
                 Instantiate(
                     team == 1 ? GameHandler.GameResources.BlueSwordsMan : GameHandler.GameResources.RedSwordsMan,
                     spawnPosition, Quaternion.identity);
-            newPawn.name = Global.maxId.ToString();
-            Global.maxId++;
+            newPawn.name = Global.MaxId.ToString();
+            Global.MaxId++;
             newPawn.GetComponent<PawnHandler>().generated = true;
             newPawn.transform.SetParent(GameHandler.GameResources.Grid, true);
 

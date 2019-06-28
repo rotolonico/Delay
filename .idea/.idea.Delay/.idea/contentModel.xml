@@ -117,6 +117,7 @@
           </e>
           <e p="Globals" t="Include">
             <e p="BasicFunctions.cs" t="Include" />
+            <e p="DoNotDestroyOnLoad.cs" t="Include" />
             <e p="GameResources.cs" t="Include" />
             <e p="Global.cs" t="Include" />
           </e>
@@ -126,6 +127,7 @@
             <e p="GameHandler.cs" t="Include" />
             <e p="HexagonHandler.cs" t="Include" />
             <e p="MenuButtons.cs" t="Include" />
+            <e p="MessageHandler.cs" t="Include" />
             <e p="OnlineHandler.cs" t="Include" />
             <e p="PawnHandler.cs" t="Include" />
             <e p="TileSpawner.cs" t="Include" />

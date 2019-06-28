@@ -59,11 +59,12 @@ namespace Game
             isActivated = false;
         }
 
-        public void DoubleClick(Transform newSelectedPawn)
+        public void DoubleClick(Transform newSelectedPawn, bool changeTurn = true)
         {
             isActivated = true;
         
             selectedPawn = newSelectedPawn;
+            var selectedPawnName = selectedPawn.name;
 
             var thisTransformPosition = selectedPawn.position;
             thisTransformPosition.z = -2;
@@ -94,7 +95,7 @@ namespace Game
         
             DeactivateSelector();
         
-            GameHandler.TurnHandler.ChangeTurn(true, new Move(name, true, Vector2.zero));
+            if (changeTurn) GameHandler.TurnHandler.ChangeTurn(true, new Move(selectedPawnName, true, Vector2.zero, false));
         }
     }
 }

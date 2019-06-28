@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using FullSerializer;
@@ -6,6 +7,8 @@ using Game;
 using Globals;
 using Serializables;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Handlers
 {
@@ -19,6 +22,13 @@ namespace Handlers
 
         public GameObject[] spawnables;
         public Grid grid;
+        
+        public GameObject timer;
+        public RectTransform timerForeground;
+        public Image timerImage;
+        public Image timerForegroundImage;
+
+        private bool resigned;
 
         private void Start()
         {
@@ -27,10 +37,33 @@ namespace Handlers
             TileSelector = GameObject.Find("TileSelector").GetComponent<TileSelector>();
             TurnHandler = GetComponent<TurnHandler>();
             Camera = Camera.main;
+            
+            if (Global.IsOnlineMatch && !Global.IsPlayerTurn) Camera.transform.eulerAngles = new Vector3(0, 0, 180);
 
-            Global.maxId = 0;
+            Global.MaxId = 0;
             LoadMap(Global.SelectedMapJson);
-            if (Global.IsOnlineMatch) StartCoroutine(CheckTurn());
+            
+            if (!Global.IsOnlineMatch) return;
+            StartCoroutine(CheckTurn());
+            timer.SetActive(true);
+        }
+
+        private void Update()
+        {
+            if (Global.IsOnlineMatch) UpdateTimer();
+        }
+
+        private void UpdateTimer()
+        {
+            if (resigned) return;
+            Global.TimeLeft -= Time.deltaTime;
+            var newPivot = timerForeground.pivot;
+            newPivot.x = 0.5f - Global.TimeLeft / 30;
+            timerForeground.pivot = newPivot;
+            
+            if (!Global.IsPlayerTurn || Global.TimeLeft > 0) return;
+            ResignGame();
+            resigned = true;
         }
 
         private void ClearMap()
@@ -72,13 +105,23 @@ namespace Handlers
                 {
                     DatabaseHandler.DownloadMove(Global.GameId, move =>
                     {
+                        if (move.resign)
+                        {
+                            MessageHandler.ShowMessage("Congratulations, You won the match!", () =>
+                                {
+                                    SceneManager.LoadScene(0);
+                                    MessageHandler.HideMessage();
+                                });
+                            return;
+                        }
+                        
                         if (move.doubleClick)
                         {
-                            GameObject.Find(move.pawn).GetComponent<PawnHandler>().DoubleClick();
+                            GameObject.Find(move.pawn).GetComponent<PawnHandler>().DoubleClick(false);
                         }
                         else
                         {
-                            GameObject.Find(move.pawn).GetComponent<PawnHandler>().UpdatePosition(move.newPosition);
+                            GameObject.Find(move.pawn).GetComponent<PawnHandler>().UpdatePosition(move.newPosition, true);
                         }
                         
                         TurnHandler.ChangeTurn();
@@ -97,6 +140,16 @@ namespace Handlers
             worldPoint.z = Camera.transform.position.z;
             Ray ray = new Ray(worldPoint, new Vector3(0, 0, 1));
             return Physics2D.GetRayIntersection(ray);
+        }
+
+        public static void ResignGame()
+        {
+            MessageHandler.ShowMessage("You lost, better luck next time!", () =>
+            {
+                SceneManager.LoadScene(0);
+                MessageHandler.HideMessage();
+            });
+            TurnHandler.ChangeTurn(true, new Move("null", false, Vector2.zero, true));
         }
     }
 }

@@ -22,6 +22,12 @@ namespace Handlers
 
         private void Start()
         {
+            if (Global.IsOnlineMatch && !Global.IsPlayerTurn || Global.FlippedBoard)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 180);
+                Global.FlippedBoard = true;
+            }
+
             if (!generated) Instantiate(team == 1 ? GameHandler.GameResources.blueHexagon : GameHandler.GameResources.redHexagon,
                 transform.position, Quaternion.identity).transform.SetParent(GameHandler.reference.grid.transform, true);
             thisTransform = transform;
@@ -77,7 +83,7 @@ namespace Handlers
         
             if (possibleDoubleClick)
             {
-                DoubleClick();
+                DoubleClick(true);
                 possibleDoubleClick = false;
                 return;
             }
@@ -103,17 +109,22 @@ namespace Handlers
             possibleDoubleClick = false;
         }
 
-        public void DoubleClick()
+        public void DoubleClick(bool fromOnline)
         {
-            GameHandler.TileSelector.DoubleClick(thisTransform);
+            GameHandler.TileSelector.DoubleClick(thisTransform, fromOnline);
         }
 
-        public void UpdatePosition(Vector3 newPosition)
+        public void UpdatePosition(Vector3 newPosition, bool fromOnline)
         {
+            if (fromOnline)
+            {
+                var col = new Collider2D[2];
+                if (Physics2D.OverlapCircleNonAlloc(newPosition, 0.1f, col) > 1) Destroy(col[0].gameObject);
+            }
+            
             newPosition.z = -1;
             thisTransform.position = newPosition;
-        
-        
+
             var tile = Physics2D.OverlapCircle(newPosition, 0.1f);
             tile.GetComponent<HexagonHandler>().ChangeTeam(team);
         }
