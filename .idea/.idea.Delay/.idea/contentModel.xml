@@ -126,6 +126,7 @@
             <e p="EditorHandler.cs" t="Include" />
             <e p="GameHandler.cs" t="Include" />
             <e p="HexagonHandler.cs" t="Include" />
+            <e p="MapIconHandler.cs" t="Include" />
             <e p="MenuButtons.cs" t="Include" />
             <e p="MessageHandler.cs" t="Include" />
             <e p="OnlineHandler.cs" t="Include" />

@@ -9,7 +9,6 @@ namespace Globals
         public static string SelectedMapJson;
         public static bool IsOnlineMatch;
         public static bool IsPlayerTurn;
-        public static bool FlippedBoard;
         public static string GameId;
         public static string PlayerId = BasicFunctions.GetCurrentTimestamp().ToString();
         public static int MaxId;

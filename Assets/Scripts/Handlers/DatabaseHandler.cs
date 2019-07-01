@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FullSerializer;
+using Globals;
 using Proyecto26;
 using Serializables;
 using UnityEngine;
@@ -7,6 +11,7 @@ namespace Handlers
 {
     public class DatabaseHandler : MonoBehaviour
     {
+        public delegate void DownloadMapsListCallback(List<string> maps);
         public delegate void EnterWaitingRoomCallback(ResponseHelper response);
         public delegate void IsGameReadyCallback(string gameId, bool ready);
         public delegate void DownloadMapCallback(string map);
@@ -15,6 +20,8 @@ namespace Handlers
         public delegate void ChangeTurnCallback();
         public delegate void DownloadTurnCallback(Move move);
     
+        public static fsSerializer Serializer = new fsSerializer();
+        
         public static string projectId;
         private static string databaseURL;
 
@@ -23,9 +30,9 @@ namespace Handlers
             databaseURL = $"https://{projectId}.firebaseio.com/";
         }
 
-        public static void UploadMap(string mapName, string map)
+        public static void UploadMap(string map, string mapName)
         {
-            RestClient.Put($"{databaseURL}maps/{mapName}.json", map);
+            RestClient.Put($"{databaseURL}maps/{BasicFunctions.GetCurrentTimestamp()}-{mapName}.json", map);
         }
         
         public static void DownloadMap(string gameId, DownloadMapCallback callback)
@@ -33,6 +40,18 @@ namespace Handlers
             RestClient.Get($"{databaseURL}games/{gameId}/map.json").Then(response =>
             {
                 callback(response.Text);
+            });
+        }
+
+        public static void DownloadMapsList(DownloadMapsListCallback callback)
+        {
+            RestClient.Get($"{databaseURL}maps.json?shallow=true").Then(response =>
+            {
+                var data = fsJsonParser.Parse(response.Text);
+                object deserialized = null;
+                Serializer.TryDeserialize(data, typeof(Dictionary<string, bool>), ref deserialized);
+
+                callback((deserialized as Dictionary<string, bool>).Keys.ToList());
             });
         }
 

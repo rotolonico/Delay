@@ -34,7 +34,7 @@ namespace Game
                             possibleCapture = colliders[0].GetComponent<PawnHandler>();
                         }
                         else gameObject.SetActive(false); 
-                    } else gameObject.SetActive(false);
+                    } else gameObject.SetActive(true);
 
                     break;
                 case "Protector":

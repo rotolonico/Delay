@@ -65,12 +65,13 @@ namespace Handlers
                 if (col.GetComponent<PawnHandler>() == null || col.GetComponent<PawnHandler>().team != team) yield break;
             }
 
-            var spawnPosition = transform.position;
+            var thisTile = transform;
+            var spawnPosition = thisTile.position;
             spawnPosition.z = -1;
             var newPawn =
                 Instantiate(
                     team == 1 ? GameHandler.GameResources.BlueSwordsMan : GameHandler.GameResources.RedSwordsMan,
-                    spawnPosition, Quaternion.identity);
+                    spawnPosition, thisTile.rotation);
             newPawn.name = Global.MaxId.ToString();
             Global.MaxId++;
             newPawn.GetComponent<PawnHandler>().generated = true;

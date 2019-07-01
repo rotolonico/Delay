@@ -4,6 +4,7 @@ using System.Linq;
 using FullSerializer;
 using Game;
 using Serializables;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,6 +21,15 @@ namespace Handlers
 
         private Camera mainCamera;
         private EventSystem mainEventSystem;
+
+        public GameObject saveWindow;
+        public GameObject loadWindow;
+        public GameObject uploadWindow;
+
+        public TMP_InputField saveInputField;
+        public TMP_InputField loadInputField;
+        public TMP_InputField uploadInputField;
+        
 
         private void Start()
         {
@@ -65,14 +75,16 @@ namespace Handlers
             return fsJsonPrinter.CompressedJson(data);
         }
 
-        public void SaveMap(string mapName)
+        public void SaveMap()
         {
-            File.WriteAllText(Application.persistentDataPath + "/" + mapName + ".dmap", ConvertMapToJson(mapName));
+            File.WriteAllText(Application.persistentDataPath + "/" + saveInputField.text + ".dmap", ConvertMapToJson(saveInputField.text));
+            
+            HideWindow();
         }
     
-        public void LoadMap(string mapName)
+        public void LoadMap()
         {
-            var reader = new StreamReader(Application.persistentDataPath + "/" + mapName + ".dmap");
+            var reader = new StreamReader(Application.persistentDataPath + "/" + loadInputField.text + ".dmap");
             var data = fsJsonParser.Parse(reader.ReadToEnd());
             reader.Close();
         
@@ -93,11 +105,14 @@ namespace Handlers
                 newTileSettings.tileId = tile.tileId;
 
             }
+            
+            HideWindow();
         }
 
-        public void UploadMap(string mapName)
+        public void UploadMap()
         {
-            DatabaseHandler.UploadMap(mapName, ConvertMapToJson(mapName));
+            DatabaseHandler.UploadMap(ConvertMapToJson(uploadInputField.text), uploadInputField.text);
+            HideWindow();
         }
 
         public void ClearMap()
@@ -107,6 +122,31 @@ namespace Handlers
             {
                 Destroy(tileGameObject);
             }
+        }
+
+        public void ShowSaveWindow()
+        {
+            saveWindow.SetActive(true);
+        }
+        
+        public void ShowLoadWindow()
+        {
+            loadWindow.SetActive(true);
+        }
+        
+        public void ShowUploadWindow()
+        {
+            uploadWindow.SetActive(true);
+        }
+
+        public void HideWindow()
+        {
+            saveWindow.SetActive(false);
+            saveInputField.text = "";
+            loadWindow.SetActive(false);
+            loadInputField.text = "";
+            uploadWindow.SetActive(false);
+            uploadInputField.text = "";
         }
     }
 }

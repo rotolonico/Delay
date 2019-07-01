@@ -22,10 +22,9 @@ namespace Handlers
 
         private void Start()
         {
-            if (Global.IsOnlineMatch && !Global.IsPlayerTurn || Global.FlippedBoard)
+            if (Global.IsOnlineMatch && !Global.IsPlayerTurn && !generated)
             {
                 transform.eulerAngles = new Vector3(0, 0, 180);
-                Global.FlippedBoard = true;
             }
 
             if (!generated) Instantiate(team == 1 ? GameHandler.GameResources.blueHexagon : GameHandler.GameResources.redHexagon,
@@ -126,7 +125,19 @@ namespace Handlers
             thisTransform.position = newPosition;
 
             var tile = Physics2D.OverlapCircle(newPosition, 0.1f);
-            tile.GetComponent<HexagonHandler>().ChangeTeam(team);
+            if (pawnType == "Swordsman" && tile == null)
+            {
+                var spawnPosition = transform.position;
+                spawnPosition.z = 0;
+                var newTile = Instantiate(GameHandler.reference.spawnables[team], spawnPosition, Quaternion.identity);
+                newTile.name = Global.MaxId.ToString();
+                Global.MaxId++;
+                Destroy(gameObject);
+            }
+            else
+            {
+                tile.GetComponent<HexagonHandler>().ChangeTeam(team);
+            }
         }
     }
 }
