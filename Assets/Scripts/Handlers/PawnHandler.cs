@@ -22,11 +22,6 @@ namespace Handlers
 
         private void Start()
         {
-            if (Global.IsOnlineMatch && !Global.IsPlayerTurn && !generated)
-            {
-                transform.eulerAngles = new Vector3(0, 0, 180);
-            }
-
             if (!generated) Instantiate(team == 1 ? GameHandler.GameResources.blueHexagon : GameHandler.GameResources.redHexagon,
                 transform.position, Quaternion.identity).transform.SetParent(GameHandler.reference.grid.transform, true);
             thisTransform = transform;

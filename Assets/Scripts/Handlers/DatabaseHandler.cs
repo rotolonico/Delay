@@ -11,16 +11,17 @@ namespace Handlers
 {
     public class DatabaseHandler : MonoBehaviour
     {
-        public delegate void DownloadMapsListCallback(List<string> maps);
         public delegate void EnterWaitingRoomCallback(ResponseHelper response);
         public delegate void IsGameReadyCallback(string gameId, bool ready);
         public delegate void DownloadMapCallback(string map);
+        public delegate void DownloadMapsListCallback(List<string> maps);
+        public delegate void DownloadOpponentNicknameCallback(string nickname);
         public delegate void CheckTurnCallback(string playerId);
         public delegate void UploadTurnCallback();
         public delegate void ChangeTurnCallback();
         public delegate void DownloadTurnCallback(Move move);
-    
-        public static fsSerializer Serializer = new fsSerializer();
+
+        private static readonly fsSerializer Serializer = new fsSerializer();
         
         public static string projectId;
         private static string databaseURL;
@@ -55,9 +56,19 @@ namespace Handlers
             });
         }
 
-        public static void EnterWaitingRoom(string id, string mapName, EnterWaitingRoomCallback callback)
+        public static void DownloadOpponentNickname(string gameId, string playerId, DownloadOpponentNicknameCallback callback)
         {
-            var payLoad = "{\"map\":\"" + mapName + "\"}";
+            var opponentPlayerId = gameId.Remove(gameId.IndexOf(playerId, StringComparison.Ordinal), playerId.Length);
+            RestClient.Get($"{databaseURL}games/{gameId}/{opponentPlayerId}.json").Then(response =>
+            {
+                callback(response.Text.Trim('"'));
+            });
+        }
+
+        public static void EnterWaitingRoom(string id, string mapName, string nickname, EnterWaitingRoomCallback callback)
+        {
+            if (nickname == "") nickname = "Unnamed Player";
+            var payLoad = "{\"map\":\"" + mapName + "\",\"nickname\":\"" + nickname + "\"}";
             RestClient.Put($"{databaseURL}waitingroom/{id}.json", payLoad).Then(response => { callback(response); });
         }
 

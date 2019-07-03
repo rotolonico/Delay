@@ -3,16 +3,18 @@ using System.IO;
 using System.Linq;
 using FullSerializer;
 using Game;
+using Globals;
 using Serializables;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace Handlers
 {
     public class EditorHandler : MonoBehaviour
     {
-        private fsSerializer serializer = new fsSerializer();
+        private readonly fsSerializer serializer = new fsSerializer();
     
         public Grid grid;
     
@@ -65,7 +67,7 @@ namespace Handlers
                 .SetParent(grid.transform, true);
         }
 
-        public string ConvertMapToJson(string mapName)
+        private string ConvertMapToJson(string mapName)
         {
             var tilesGameObjects = GameObject.FindGameObjectsWithTag("EditorTile");
             var tiles = tilesGameObjects.Select(tilesGameObject => tilesGameObject.GetComponent<TileSettings>()).Select(tileSettings => new Tile(tileSettings.team, tileSettings.type, tileSettings.id, tileSettings.position.x, tileSettings.position.y, tileSettings.tileId)).ToList();
@@ -77,13 +79,30 @@ namespace Handlers
 
         public void SaveMap()
         {
-            File.WriteAllText(Application.persistentDataPath + "/" + saveInputField.text + ".dmap", ConvertMapToJson(saveInputField.text));
-            
-            HideWindow();
+            if (File.Exists(Application.persistentDataPath + "/" + saveInputField.text + ".dmap"))
+            {
+                MessageHandler.ShowMessage("A saved map with that name already exists, do you want to replace it?", () =>
+                {
+                    File.WriteAllText(Application.persistentDataPath + "/" + saveInputField.text + ".dmap", ConvertMapToJson(saveInputField.text));
+                    HideWindow();
+                    MessageHandler.HideMessage();
+                }, MessageHandler.HideMessage);
+            }
+            else
+            {
+                File.WriteAllText(Application.persistentDataPath + "/" + saveInputField.text + ".dmap", ConvertMapToJson(saveInputField.text));
+                HideWindow();
+            }
         }
     
         public void LoadMap()
         {
+            if (!File.Exists(Application.persistentDataPath + "/" + loadInputField.text + ".dmap"))
+            {
+                MessageHandler.ShowMessage("There is no saved map with that name!", MessageHandler.HideMessage, MessageHandler.HideMessage);
+                return;
+            }
+            
             var reader = new StreamReader(Application.persistentDataPath + "/" + loadInputField.text + ".dmap");
             var data = fsJsonParser.Parse(reader.ReadToEnd());
             reader.Close();
@@ -111,11 +130,15 @@ namespace Handlers
 
         public void UploadMap()
         {
-            DatabaseHandler.UploadMap(ConvertMapToJson(uploadInputField.text), uploadInputField.text);
-            HideWindow();
+            MessageHandler.ShowMessage("By continuing, this map will be uploaded and visible to everyone in the map selection.", MessageHandler.HideMessage,
+                () =>
+                {
+                    DatabaseHandler.UploadMap(ConvertMapToJson(uploadInputField.text), uploadInputField.text);
+                    HideWindow();
+                });
         }
 
-        public void ClearMap()
+        private void ClearMap()
         {
             var tilesGameObjects = GameObject.FindGameObjectsWithTag("EditorTile");
             foreach (var tileGameObject in tilesGameObjects)
@@ -147,6 +170,22 @@ namespace Handlers
             loadInputField.text = "";
             uploadWindow.SetActive(false);
             uploadInputField.text = "";
+        }
+
+        public void Back()
+        {
+            if (Global.IsOnlineMatch)
+            {
+                MessageHandler.ShowMessage("Any unsaved changes will be discarded. Are you sure?", () =>
+                {
+                    MessageHandler.HideMessage();
+                    SceneManager.LoadScene(0);
+                }, MessageHandler.HideMessage);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }

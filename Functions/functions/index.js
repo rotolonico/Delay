@@ -12,40 +12,42 @@ exports.onNewPlayer = functions.database
 
         var numChildren = parentSnapshot.numChildren();
 
-        if (numChildren % 2 === 0){            
+        if (numChildren > 1){            
 
-            var lastChild;
-            var secondLastChild;
+            var firstChild;
+            var secondChild;
     
-            parentSnapshot.forEach(function(childSnapshot) {    
-                lastChild = childSnapshot;
-            });
-            parentSnapshot.forEach(function(childSnapshot) {    
-                if (childSnapshot.key !== lastChild.key) secondLastChild = childSnapshot;
-            });
+            var index = 0;
+            parentSnapshot.forEach(function(childSnapshot) {
+                if (index === 0) firstChild = childSnapshot;    
+                if (index === 1) secondChild = childSnapshot;
+                index++;
+            });            
     
-            var gameId = lastChild.key + secondLastChild.key;
+            var gameId = secondChild.key + firstChild.key;
             console.log("Gameid: " + gameId)
 
             var mapName;
             if (Math.random() > 0.5){
-                mapName = secondLastChild.val().map;
+                mapName = firstChild.val().map;
             } else {
-                mapName = lastChild.val().map;
+                mapName = secondChild.val().map;
             }
 
             admin.database().ref("/maps").child(mapName).once("value")
             .then(function(mapSnapshot) {
                 admin.database().ref("/games").child(gameId).update({
                     map: mapSnapshot.val(),
-                    turn: secondLastChild.key
+                    turn: firstChild.key,
+                    [firstChild.key]: firstChild.val().nickname,
+                    [secondChild.key]: secondChild.val().nickname
                 })
         
-                lastChild.ref.update({
+                secondChild.ref.update({
                     gameid: gameId
                 });
         
-                secondLastChild.ref.update({
+                firstChild.ref.update({
                     gameid: gameId
                 });
 

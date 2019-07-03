@@ -9,10 +9,15 @@ namespace Handlers
         public string firebaseProjectId;
 
         public string battlefieldMap;
+
+        private static bool firstTime = true;
     
         private void Start()
         {
             DatabaseHandler.projectId = firebaseProjectId;
+            if (!firstTime) Destroy(MessageHandler.canvas.gameObject);
+            firstTime = false;
+            Global.Reset();
         }
         
         public void Play()

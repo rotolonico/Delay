@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Globals;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,8 +11,12 @@ namespace Handlers
     public class OnlineHandler : MonoBehaviour
     {
         public static OnlineHandler reference;
+
+        public Canvas mainCanvas;
+        public Canvas waitingCanvas;
         
         public GameObject MapIcon;
+        public TMP_InputField nicknameInputField;
         
         public Transform mapIconsContainer;
         public Sprite[] spawnablesIcons;
@@ -46,14 +51,32 @@ namespace Handlers
 
         public void StartSearch()
         {
-            DatabaseHandler.EnterWaitingRoom(Global.PlayerId, selectedMap,
+            ShowWaitingCanvas();
+            DatabaseHandler.EnterWaitingRoom(Global.PlayerId, selectedMap, nicknameInputField.text,
                 response => { StartCoroutine(IsGameReady()); });
         }
 
         public void Back()
         {
-            DatabaseHandler.ExitWaitingRoom(Global.PlayerId);
             SceneManager.LoadScene(0);
+        }
+        
+        public void Stop()
+        {
+            DatabaseHandler.ExitWaitingRoom(Global.PlayerId);
+            ShowMainCanvas();
+        }
+
+        private void ShowMainCanvas()
+        {
+            waitingCanvas.enabled = false;
+            mainCanvas.enabled = true;
+        }
+
+        private void ShowWaitingCanvas()
+        {
+            mainCanvas.enabled = false;
+            waitingCanvas.enabled = true;
         }
 
         private IEnumerator IsGameReady()
@@ -67,6 +90,11 @@ namespace Handlers
                     DatabaseHandler.ExitWaitingRoom(Global.PlayerId);
                     
                     Global.GameId = gameId;
+                    
+                    DatabaseHandler.DownloadOpponentNickname(gameId, Global.PlayerId, nickname =>
+                        {
+                            Global.OpponentNickname = nickname;
+                        });
 
                     DatabaseHandler.DownloadMap(gameId, map =>
                     {
